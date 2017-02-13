@@ -8,10 +8,12 @@ import outils.Sens;
 public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 
 	private ArrayList<Demande> listeTrieeCirculaireDeDemandes;
+	private int length;
 	
 	public ListeTrieeCirculaireDeDemandes(int length)
 	{
 		listeTrieeCirculaireDeDemandes = new ArrayList<Demande>(length);
+		this.length = length;
 	}
 	
 	@Override
@@ -35,25 +37,80 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	}
 
 	@Override
-	public void inserer(Object e) {
-		listeTrieeCirculaireDeDemandes.add((Demande) e);
+	public void inserer(Object e) throws IllegalArgumentException{
+		if(!(e instanceof Demande)) 
+		{
+			throw new IllegalArgumentException();
+		}
+		if(listeTrieeCirculaireDeDemandes.size() == this.length)
+		{
+			throw new IllegalArgumentException();
+		}
+		if(((Demande) e).estIndefini())
+		{
+			throw new IllegalArgumentException();
+		}
+		if(((Demande) e).enDescente() && ((Demande) e).etage() == 0)
+		{
+			throw new IllegalArgumentException();
+		}
+		if(((Demande) e).etage() < 0)
+		{
+			throw new IllegalArgumentException();
+		}
+		if(((Demande) e).etage() > this.length-1)
+		{
+			throw new IllegalArgumentException();
+		}
+		if(((Demande) e).enMontee() && ((Demande) e).etage() == this.length-1)
+		{
+			throw new IllegalArgumentException();
+		}
+		if(!this.contient(e))
+		{
+			listeTrieeCirculaireDeDemandes.add((Demande) e);
+		}
 	}
 
 	@Override
-	public void supprimer(Object e) {
-		listeTrieeCirculaireDeDemandes.remove(e);
-		
+	public void supprimer(Object o) {
+		if(!this.contient(o))
+		{
+			throw new IllegalArgumentException();
+		}
+		else
+		{
+			listeTrieeCirculaireDeDemandes.remove((Demande)o);
+		}
 	}
 
 	@Override
 	public Object suivantDe(Object courant) {
-		Demande demandeSuivanteTriee = new Demande();
-		for (Demande demande : this.listeTrieeCirculaireDeDemandes) {
-			if(demande.sens().equals(((Demande) courant).sens()) && 
-					((Demande) courant).etage() < demandeSuivanteTriee.etage() &&
-					demande.etage() > demandeSuivanteTriee.etage())
+		if(this.estVide())
+		{
+			return null;
+		}
+		if(!this.contient(courant))
+		{
+			this.inserer(courant);
+		}
+		// TODO Ajouter si pas existant ????
+		Demande demandeSuivanteTriee = null;
+		for (Demande demande : this.listeTrieeCirculaireDeDemandes)
+		{
+			if(demandeSuivanteTriee == null )demandeSuivanteTriee = demande;
+			if(demande.sens().equals(((Demande) courant).sens()))
 			{
-				demande = demandeSuivanteTriee;
+				if(demande.enMontee() && ((Demande) courant).etage() > demande.etage() && 
+						demande.etage() < demandeSuivanteTriee.etage())
+				{
+					demandeSuivanteTriee =  demande;
+				}
+				if(demande.enDescente() && ((Demande) courant).etage() < demande.etage() && 
+						demande.etage() > demandeSuivanteTriee.etage())
+				{
+					demandeSuivanteTriee =  demande;
+				}
 			}
 		}
 		return demandeSuivanteTriee;
@@ -64,11 +121,11 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		//permet de construire la String to return
 		String s ="";
 		// la liste triee apres jointure entre la montée et la descente
-		ArrayList<Demande> listeTriee = new ArrayList<Demande>();
+		ArrayList<Demande> listeTriee = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
 		// permet de stocker toutes les montées
-		ArrayList<Demande> listeMontee = new ArrayList<Demande>();
+		ArrayList<Demande> listeMontee = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
 		// permet de stocker toutes les descentes
-		ArrayList<Demande> listeDescente = new ArrayList<Demande>();
+		ArrayList<Demande> listeDescente = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
 		
 		
 		// on itere sur la donnée membre listeTrieeCirculaireDeDemandes où on a stockée toutes les demandes
@@ -77,9 +134,8 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 			// gestion de la montée
 			if(demande.enMontee())
 			{
-				System.out.println(demande.enMontee());
 				// si la liste montée et vide ou si le dernier element de la iste montée est plus petit que l'element couranr de la boucle
-				if(listeMontee.isEmpty() || listeMontee.get(listeMontee.size()).etage() < demande.etage())
+				if(listeMontee.isEmpty() || listeMontee.get(listeMontee.size()-1).etage() < demande.etage())
 				{
 					// on ajoute
 					listeMontee.add(demande);
@@ -87,49 +143,32 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				// si le dernier element de la iste montée est plus grand que l'element couranr de la boucle
 				else
 				{
-					Demande demandeToCheck = demande;
 					for(int i = 0 ; i < listeMontee.size(); i++)
 					{
-						
-						if(listeMontee.get(i).etage() < demandeToCheck.etage())
+						if(listeMontee.get(i).etage() > demande.etage())
 						{
-							// on recupere la position du dernier element
-							Demande demandeToMove = listeMontee.get(i);
-							// on switch les positions entre l'element à insérer et le dernier element plus grand
-							listeMontee.add(i, demandeToCheck);
-							demandeToCheck = demandeToMove;
-						}
-						else
-						{
-							listeMontee.add(demandeToCheck);
+							listeMontee.add(i, demande);
+							break;
 						}
 					}
-					
 				}
 			}
 			else if(demande.sens() == Sens.DESCENTE)
 			{
-				if(listeDescente.isEmpty() || listeDescente.get(listeDescente.size()).etage() > demande.etage())
+				if(listeDescente.isEmpty() || listeDescente.get(listeDescente.size()-1).etage() > demande.etage())
 				{
 					listeDescente.add(demande);
 				}
 				else
 				{
-					Demande demandeToCheck = demande;
 					for(int i = 0 ; i < listeDescente.size(); i++)
 					{
 						
-						if(listeDescente.get(i).etage() < demandeToCheck.etage())
+						if(listeDescente.get(i).etage() < demande.etage())
 						{
-							// on recupere la position du dernier element
-							Demande demandeToMove = listeDescente.get(i);
 							// on switch les positions entre l'element à insérer et le dernier element plus grand
-							listeDescente.add(i, demandeToCheck);
-							demandeToCheck = demandeToMove;
-						}
-						else
-						{
-							listeDescente.add(demandeToCheck);
+							listeDescente.add(i, demande);
+							break;
 						}
 					}
 				}
@@ -139,7 +178,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		listeMontee.addAll(listeDescente);
 		listeTriee = listeMontee;
 		// composition de la string to return easy
-		s+="[ ";
+		s+="[";
 		for (int i = 0; i < listeTriee.size();i++) {
 			if(i == listeTriee.size())
 			{
@@ -147,12 +186,14 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 			}
 			else
 			{
-				s+=listeTriee.get(i).toString() +", ";
+				s+=listeTriee.get(i).toString() +",";
 			}
 		}
-		s = s.substring(0, s.length()-1);
-		s+=" ]";
+		if(s.endsWith(","))
+		{
+			s = s.substring(0, s.length()-1);
+		}
+		s+="]";
 		return s;
 	}
-
 }
