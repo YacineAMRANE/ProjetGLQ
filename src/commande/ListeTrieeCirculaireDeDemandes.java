@@ -69,12 +69,15 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		ArrayList<Demande> listeMontee = new ArrayList<Demande>();
 		// permet de stocker toutes les descentes
 		ArrayList<Demande> listeDescente = new ArrayList<Demande>();
+		
+		
 		// on itere sur la donnée membre listeTrieeCirculaireDeDemandes où on a stockée toutes les demandes
 		for (Demande demande : listeTrieeCirculaireDeDemandes) 
 		{
 			// gestion de la montée
-			if(demande.sens() == Sens.MONTEE)
+			if(demande.enMontee())
 			{
+				System.out.println(demande.enMontee());
 				// si la liste montée et vide ou si le dernier element de la iste montée est plus petit que l'element couranr de la boucle
 				if(listeMontee.isEmpty() || listeMontee.get(listeMontee.size()).etage() < demande.etage())
 				{
@@ -84,11 +87,24 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				// si le dernier element de la iste montée est plus grand que l'element couranr de la boucle
 				else
 				{
-					// on recupere la position du dernier element
-					Demande demandeToMove = listeMontee.get(listeMontee.size());
-					// on switch les positions entre l'element à insérer et le dernier element plus grand
-					listeMontee.add(listeMontee.size(), demande);
-					listeMontee.add(demandeToMove);
+					Demande demandeToCheck = demande;
+					for(int i = 0 ; i < listeMontee.size(); i++)
+					{
+						
+						if(listeMontee.get(i).etage() < demandeToCheck.etage())
+						{
+							// on recupere la position du dernier element
+							Demande demandeToMove = listeMontee.get(i);
+							// on switch les positions entre l'element à insérer et le dernier element plus grand
+							listeMontee.add(i, demandeToCheck);
+							demandeToCheck = demandeToMove;
+						}
+						else
+						{
+							listeMontee.add(demandeToCheck);
+						}
+					}
+					
 				}
 			}
 			else if(demande.sens() == Sens.DESCENTE)
@@ -99,9 +115,23 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				}
 				else
 				{
-					Demande demandeToMove = listeDescente.get(listeDescente.size());
-					listeDescente.add(listeDescente.size(), demande);
-					listeDescente.add(demandeToMove);
+					Demande demandeToCheck = demande;
+					for(int i = 0 ; i < listeDescente.size(); i++)
+					{
+						
+						if(listeDescente.get(i).etage() < demandeToCheck.etage())
+						{
+							// on recupere la position du dernier element
+							Demande demandeToMove = listeDescente.get(i);
+							// on switch les positions entre l'element à insérer et le dernier element plus grand
+							listeDescente.add(i, demandeToCheck);
+							demandeToCheck = demandeToMove;
+						}
+						else
+						{
+							listeDescente.add(demandeToCheck);
+						}
+					}
 				}
 			}
 		}
@@ -120,6 +150,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				s+=listeTriee.get(i).toString() +", ";
 			}
 		}
+		s = s.substring(0, s.length()-1);
 		s+=" ]";
 		return s;
 	}
