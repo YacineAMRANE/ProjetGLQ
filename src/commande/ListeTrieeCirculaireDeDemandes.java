@@ -245,9 +245,8 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	@Override
 	public String toString() {
 		String s ="";
-		ArrayList<Demande> listeTriee = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
-		ArrayList<Demande> listeMontee = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
-		ArrayList<Demande> listeDescente = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
+		ArrayList<Demande> listeMontee = new ArrayList<Demande>();
+		ArrayList<Demande> listeDescente = new ArrayList<Demande>();
 		
 		for (Demande demande : listeTrieeCirculaireDeDemandes) 
 		{
@@ -291,7 +290,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 			}
 		}
 		listeMontee.addAll(listeDescente);
-		listeTriee = listeMontee;
+		ArrayList<Demande> listeTriee = new ArrayList<Demande>(listeMontee);
 		s+="[";
 		for (int i = 0; i < listeTriee.size();i++) {
 			if(i == listeTriee.size())
