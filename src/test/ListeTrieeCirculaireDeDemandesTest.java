@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import outils.Demande;
 import outils.Sens;
 import commande.IListeTrieeCirculaire;

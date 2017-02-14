@@ -35,7 +35,7 @@ public class Demande  {
 	}
 
 	/**
-	 * 
+	 * Retourne l'etage de la demande.
 	 * @return L'etage de destination.
 	 */
 	public int etage() {
@@ -43,7 +43,7 @@ public class Demande  {
 	}
 
 	/**
-	 * 
+	 * Retourne true si le sens de la demande est indefini.
 	 * @return True si le sens est indefini.
 	 */
 	public boolean estIndefini() {
@@ -51,7 +51,7 @@ public class Demande  {
 	}
 
 	/**
-	 * 
+	 * Retourne true si le sens de la demande est montee.
 	 * @return True si le sens est montee.
 	 */
 	public boolean enMontee() {
@@ -59,7 +59,7 @@ public class Demande  {
 	}
 
 	/**
-	 * 
+	 * Retourne true si le sens de la demande est descente.
 	 * @return True si le sens es t descente.
 	 */
 	public boolean enDescente() {
@@ -68,22 +68,24 @@ public class Demande  {
 
 	/**
 	 * Passage à l'etage suivant.
+	 * @throws ExceptionCabineArretee Exception générée dans le cas d'une demande indefini.
 	 */
-	public void passeEtageSuivant() {
+	public void passeEtageSuivant() throws ExceptionCabineArretee {
 		if (this.sens == Sens.DESCENTE) etage--;
 		if (this.sens == Sens.MONTEE) etage++;
+		if (this.sens == Sens.INDEFINI) throw new ExceptionCabineArretee();
 	}
 
 	/**
 	 * Changement de sens.
-	 * @param nouveauSens nouveau sens.
+	 * @param nouveauSens Nouveau sens.
 	 */
 	public void changeSens(Sens nouveauSens) {
 		this.sens = nouveauSens;
 	}
 	
 	/**
-	 * 
+	 * Retour le sens de la demande.
 	 * @return Le sens.
 	 */
 	public Sens sens() {
@@ -100,8 +102,8 @@ public class Demande  {
 	
 	/**
 	 * Redefinition de equals.
-	 * @param demande
-	 * @return
+	 * @param object Objet reçu.
+	 * @return True si l'objet reçu est une demande.
 	 */
 	@Override
 	public boolean equals(Object object){

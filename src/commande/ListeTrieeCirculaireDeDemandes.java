@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import outils.Demande;
 import outils.Sens;
 
+/**
+ * Classe IListeTrieeCirculaire.
+ * @author alexis,yacine,franck,yann
+ */
 public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 
 	/*
@@ -15,7 +19,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	 * taille de la liste
 	 */
 	private int length;
-	
+
 	/**
 	 * Constructeur.
 	 * @param length taille.
@@ -25,7 +29,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		listeTrieeCirculaireDeDemandes = new ArrayList<Demande>(length);
 		this.length = length;
 	}
-	
+
 	/**
 	 * 
 	 * @return la taille de la liste.
@@ -52,9 +56,9 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	public void vider() {
 		listeTrieeCirculaireDeDemandes.clear();
 	}
-	
+
 	/**
-	 * @param demande Demande à vérifier.
+	 * @param e Demande à vérifier.
 	 * @return True si la liste contient la demande indiquée.
 	 */
 	@Override
@@ -64,7 +68,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 
 	/**
 	 * Permet d'insérer la demande indiquée.
-	 * @param demande Demande à insérer.
+	 * @param e Demande à insérer.
 	 */
 	@Override
 	public void inserer(Object e) throws IllegalArgumentException{
@@ -104,7 +108,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 
 	/**
 	 * Supprime la demande indiquée.
-	 * @param demande Demande à supprimer.
+	 * @param o Demande à supprimer.
 	 */
 	@Override
 	public void supprimer(Object o) {
@@ -120,7 +124,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 
 	/**
 	 * @param demande Demande à vérifier.
-	 * @return demande Demande suivante.
+	 * @return courant Demande suivante.
 	 */
 	@Override
 	public Object suivantDe(Object courant) {
@@ -132,7 +136,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		{
 			return courant;
 		}
-		
+
 		Demande demandeSuivanteTriee = null;
 		Demande demandePlusPetitMontee = null;
 		Demande demandePlusGrandMontee = null;
@@ -168,7 +172,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 					demandePlusGrandDescente = demande;
 				}
 			}
-			
+
 			if(demande.sens().equals(((Demande) courant).sens()))
 			{
 				if(demande.enMontee() && ((Demande) courant).etage() > demande.etage() && 
@@ -204,7 +208,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 							}
 						}
 					}
-					
+
 					if(((Demande) courant).enMontee())
 					{
 						if(demandePlusGrandMontee == null)
@@ -225,7 +229,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				{
 					demandeSuivanteTriee = demandePlusPetitMontee;
 				}
-				
+
 				if(demande.enDescente())
 				{
 					if(demande.sens().equals(((Demande) courant).sens()) && ((Demande) courant).etage() < demandePlusPetitDescente.etage())
@@ -245,7 +249,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		}
 		return demandeSuivanteTriee;
 	}
-	
+
 	/**
 	 * Redefinition de toString.
 	 * @return la liste triee.
@@ -253,10 +257,9 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	@Override
 	public String toString() {
 		String s ="";
-		ArrayList<Demande> listeTriee = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
 		ArrayList<Demande> listeMontee = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
 		ArrayList<Demande> listeDescente = new ArrayList<Demande>(listeTrieeCirculaireDeDemandes.size());
-		
+
 		for (Demande demande : listeTrieeCirculaireDeDemandes) 
 		{
 			if(demande.enMontee())
@@ -277,7 +280,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 					}
 				}
 			}
-			else if(demande.sens() == Sens.DESCENTE)
+			else if(demande.enDescente())
 			{
 				if(listeDescente.isEmpty() || listeDescente.get(listeDescente.size()-1).etage() > demande.etage())
 				{
@@ -287,7 +290,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				{
 					for(int i = 0 ; i < listeDescente.size(); i++)
 					{
-						
+
 						if(listeDescente.get(i).etage() < demande.etage())
 						{
 							// on switch les positions entre l'element à insérer et le dernier element plus grand
@@ -299,7 +302,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 			}
 		}
 		listeMontee.addAll(listeDescente);
-		listeTriee = listeMontee;
+		ArrayList<Demande> listeTriee = new ArrayList<Demande>(listeMontee);
 		s+="[";
 		for (int i = 0; i < listeTriee.size();i++) {
 			if(i == listeTriee.size())
