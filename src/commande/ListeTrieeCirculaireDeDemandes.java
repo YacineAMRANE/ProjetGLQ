@@ -68,14 +68,6 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	 */
 	@Override
 	public void inserer(Object e) throws IllegalArgumentException{
-		if(!(e instanceof Demande)) 
-		{
-			throw new IllegalArgumentException();
-		}
-		if(listeTrieeCirculaireDeDemandes.size() == this.length)
-		{
-			throw new IllegalArgumentException();
-		}
 		if(((Demande) e).estIndefini())
 		{
 			throw new IllegalArgumentException();
@@ -150,7 +142,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				{
 					demandePlusPetitMontee = demande;
 				}
-				if(demande.etage() > demandePlusGrandMontee.etage())
+				else
 				{
 					demandePlusGrandMontee = demande;
 				}
@@ -163,7 +155,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				{
 					demandePlusPetitDescente = demande;
 				}
-				if(demande.etage() > demandePlusGrandDescente.etage())
+				else
 				{
 					demandePlusGrandDescente = demande;
 				}
@@ -176,7 +168,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 				{
 					demandeSuivanteTriee =  demande;
 				}
-				if(demande.enDescente() && ((Demande) courant).etage() > demande.etage() && 
+				else if(demande.enDescente() && ((Demande) courant).etage() > demande.etage() && 
 						demande.etage() < demandeSuivanteTriee.etage())
 				{
 					demandeSuivanteTriee =  demande;
@@ -277,7 +269,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 					}
 				}
 			}
-			else if(demande.sens() == Sens.DESCENTE)
+			else if(demande.enDescente())
 			{
 				if(listeDescente.isEmpty() || listeDescente.get(listeDescente.size()-1).etage() > demande.etage())
 				{
