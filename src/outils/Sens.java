@@ -2,7 +2,7 @@ package outils;
 
 /**
  * Enumeration Sens.
- * @author yacine
+ * @author alexis,yacine,franck,yann
  */
 public enum Sens {
 
@@ -10,8 +10,9 @@ public enum Sens {
 	DESCENTE,
 	INDEFINI;
 
-	
-	
+	/**
+	 * Redefinition de toString.
+	 */
 	@Override
 	public String toString() {
 		switch(this) {
