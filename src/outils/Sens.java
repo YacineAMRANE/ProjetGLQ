@@ -10,6 +10,8 @@ public enum Sens {
 	DESCENTE,
 	INDEFINI;
 
+	
+	
 	@Override
 	public String toString() {
 		switch(this) {
