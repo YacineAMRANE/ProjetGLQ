@@ -1,4 +1,4 @@
-package commande;
+package iug;
 
 public class DoublureDeIUG {
 

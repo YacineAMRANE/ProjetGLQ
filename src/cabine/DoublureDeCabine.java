@@ -1,4 +1,4 @@
-package commande;
+package cabine;
 
 public class DoublureDeCabine {
 
