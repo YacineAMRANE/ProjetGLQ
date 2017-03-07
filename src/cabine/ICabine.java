@@ -8,11 +8,6 @@ package cabine;
 public interface ICabine 
 {
 	/** 
-	 * Permet d'indiquer s'il y a un changement d'étage.
-	 */
-	void signalerChangementDEtage();
-	
-	/** 
 	 * Permet de modifier le sens de deplacement de la cabine vers la MONTEE.
 	 */
 	void monter();
