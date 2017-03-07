@@ -26,7 +26,4 @@ public interface ICabine
 	 * Indique un arret.
 	 */
 	void arreter();
-	
-	
-	
 }

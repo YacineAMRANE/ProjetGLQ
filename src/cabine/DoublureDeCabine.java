@@ -4,25 +4,25 @@ public class DoublureDeCabine implements ICabine{
 
 	@Override
 	public void monter() {
-		// TODO Auto-generated method stub
+		System.out.println("La cabine monte");
 		
 	}
 
 	@Override
 	public void descendre() {
-		// TODO Auto-generated method stub
+		System.out.println("La cabine descends");
 		
 	}
 
 	@Override
 	public void arreterProchainNiveau() {
-		// TODO Auto-generated method stub
+		System.out.println("La cabine s'arrete au prochain niveau");
 		
 	}
 
 	@Override
 	public void arreter() {
-		// TODO Auto-generated method stub
+		System.out.println("La cabine s'arrete");
 		
 	}
 
