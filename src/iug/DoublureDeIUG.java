@@ -16,7 +16,7 @@ public class DoublureDeIUG implements IIUG {
 	}
 	
 	public void allumerBouton(Demande d){
-		System.out.println("Bouton allumé : "+d.toString());
+		
 	}
 	
 	public void eteindreBouton(Demande d){
