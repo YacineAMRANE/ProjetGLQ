@@ -175,13 +175,11 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 
 			if(demande.sens().equals(((Demande) courant).sens()))
 			{
-				if(demande.enMontee() && ((Demande) courant).etage() > demande.etage() && 
-						demande.etage() > demandeSuivanteTriee.etage())
+				if(demande.enMontee() && (!demandeSuivanteTriee.enMontee() || ((Demande) courant).etage() > demandeSuivanteTriee.etage()))
 				{
 					demandeSuivanteTriee =  demande;
 				}
-				if(demande.enDescente() && ((Demande) courant).etage() > demande.etage() && 
-						demande.etage() < demandeSuivanteTriee.etage())
+				if(demande.enDescente() && (!demandeSuivanteTriee.enDescente() || ((Demande) courant).etage() < demandeSuivanteTriee.etage()))
 				{
 					demandeSuivanteTriee =  demande;
 				}
@@ -217,7 +215,14 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 						}
 						else if(((Demande) courant).etage() > demandePlusGrandMontee.etage())
 						{
-							demandeSuivanteTriee = demandePlusPetitMontee;
+							if(demandePlusGrandDescente != null)
+							{
+								demandeSuivanteTriee = demandePlusGrandDescente;
+							}
+							else
+							{
+								demandeSuivanteTriee = demandePlusPetitMontee;
+							}
 						}
 						else if(((Demande) courant).etage() < demandePlusPetitMontee.etage())
 						{
@@ -242,6 +247,10 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 						{
 							demandeSuivanteTriee = demandePlusGrandDescente;
 						}
+					}
+					if(demandePlusGrandDescente != null && ((Demande) courant).etage() > demandePlusGrandDescente.etage())
+					{
+						demandeSuivanteTriee = demandePlusGrandDescente;
 					}
 				}
 			}
