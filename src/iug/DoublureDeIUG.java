@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import outils.Demande;
 import outils.Sens;
 import iug.IIUG;
-import Controleur.IControleur;
+import controleur.IControleur;
 import commande.ListeTrieeCirculaireDeDemandes;
 
 public class DoublureDeIUG implements IIUG {

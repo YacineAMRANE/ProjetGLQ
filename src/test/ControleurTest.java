@@ -4,20 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import cabine.DoublureDeCabine;
 import cabine.ICabine;
 import commande.IListeTrieeCirculaire;
 import commande.ListeTrieeCirculaireDeDemandes;
-import Controleur.*;
+import controleur.*;
 import iug.DoublureDeIUG;
 import outils.Demande;
 import outils.Sens;
