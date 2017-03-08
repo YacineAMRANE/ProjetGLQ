@@ -1,4 +1,4 @@
-package controleur;
+package Controleur;
 
 import outils.Demande;
 
@@ -63,5 +63,4 @@ public class Controleur implements IControleur {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

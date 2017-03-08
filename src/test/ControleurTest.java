@@ -17,15 +17,16 @@ import cabine.DoublureDeCabine;
 import cabine.ICabine;
 import commande.IListeTrieeCirculaire;
 import commande.ListeTrieeCirculaireDeDemandes;
-import controleur.*;
+import Controleur.*;
 import iug.DoublureDeIUG;
 import outils.Demande;
 import outils.Sens;
+import iug.IIUG;
 
 public class ControleurTest {
 	private IControleur controleur;
 	private ICabine cabine;
-	private IIug iug;
+	private IIUG iug;
 	
 	@Before
 	public void setUp() {
