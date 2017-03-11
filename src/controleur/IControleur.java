@@ -40,7 +40,7 @@ public interface IControleur {
 	/**
 	 * stocke la demande
 	 */
-	void stocker (Demande demande);
+	void stocker(Demande demande);
 
 	/**
 	 * éteint tous les boutons
