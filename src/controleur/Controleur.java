@@ -162,13 +162,13 @@ public class Controleur implements IControleur {
 	@Override
 	public void arretDUrgence() {
 		if (this.mode != Mode.ARRETURGENCE) {
-			if(this.mode == Mode.DESCENTE || this.mode == Mode.DESCENTE){
+			if(this.mode == Mode.DESCENTE || this.mode == Mode.MONTEE){
 				viderStock();
 				eteindreTousBoutons();
 				arreter();
 				MAJSens();
 			}
-			if(this.mode == Mode.ARRETETAGE || this.mode == Mode.ATTENTE) {
+			if(this.mode == Mode.ARRETETAGE || this.mode == Mode.ATTENTE || this.mode == Mode.ARRETIMMINENT) {
 				viderStock();
 				eteindreTousBoutons();
 			}
