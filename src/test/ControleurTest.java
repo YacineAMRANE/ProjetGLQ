@@ -90,10 +90,12 @@ public class ControleurTest {
 		
 		File fic = new File("TestCase1Correct.txt");
 		FileInputStream fis = new FileInputStream(fic);
-		while(fis.read(buff) != -1) {
+		BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+		while(fis.read(buff) != -1 && b.readLine() != "END") {
 			String s = new String(buff);
 			sb2.append(s);
 		}
+		b.close();
 		fis2.close();
 		fis.close();
 		assertEquals(sb2.toString(), sb.toString());
@@ -127,7 +129,7 @@ public void testCase2() throws IOException
 	//A ce moment là un utilisateur externe se situant au 5ème demande l’ascenseur
 	//appel 5M ------------------------------(utilisateur 2)
 	//allumer bouton 5M
-	controleur.demander(new Demande(5, Sens.INDEFINI));
+	controleur.demander(new Demande(5, Sens.MONTEE));
 	//L’ascenseur se situe en 4, on éteint le bouton 4C
 	//signal franchissement palier -----------(cabine en 4)
 	controleur.signalerChangementDEtage();
@@ -159,10 +161,12 @@ public void testCase2() throws IOException
 	
 	File fic = new File("TestCase2Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -234,10 +238,12 @@ public void testCase3() throws IOException
 	
 	File fic = new File("TestCase3Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -289,8 +295,7 @@ public void testCase4() throws IOException
 	//signal de franchissement de palier -------(cabine en 8)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 8M */
-	controleur.eteindreTousBoutons();
+	// eteindre bouton 8M
 
 	
 	byte[] buff = new byte[16];
@@ -302,10 +307,12 @@ public void testCase4() throws IOException
 	
 	File fic = new File("TestCase4Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -377,8 +384,7 @@ public void testCase5() throws IOException
 	//signal de franchissement de palier ------(cabine en 0)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 0C */
-	controleur.eteindreTousBoutons();
+	//éteindre bouton 0C
 
 	
 	byte[] buff = new byte[16];
@@ -390,10 +396,12 @@ public void testCase5() throws IOException
 	
 	File fic = new File("TestCase5Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -483,7 +491,6 @@ public void testCase6() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	//éteindre bouton 0C */
-	controleur.eteindreTousBoutons();
 	
 	byte[] buff = new byte[16];
 	FileInputStream fis2 = new FileInputStream(ficTestCase6);
@@ -494,10 +501,12 @@ public void testCase6() throws IOException
 	
 	File fic = new File("TestCase6Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -553,8 +562,7 @@ public void testCase7() throws IOException
 	//signal de franchissement de palier ------(cabine en 1) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 1C */
-	controleur.eteindreTousBoutons();
+	//éteindre bouton 1C 
 	
 	byte[] buff = new byte[16];
 	FileInputStream fis2 = new FileInputStream(ficTestCase7);
@@ -565,10 +573,12 @@ public void testCase7() throws IOException
 	
 	File fic = new File("TestCase7Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -606,7 +616,6 @@ public void testCase8() throws IOException
 	//controleur.MAJPosition();
 	//éteindre bouton 4M
 	//éteindre bouton 4D
-	controleur.eteindreTousBoutons();
 	//appel 6C --------------------------------(utilisateur 1)
 	controleur.demander(new Demande(6, Sens.INDEFINI));
 	//allumer bouton 6C 
@@ -615,6 +624,7 @@ public void testCase8() throws IOException
 	//allumer bouton 2C
 	//descendre */
 	//controleur.MAJSens();
+	controleur.signalerChangementDEtage();
 	
 	byte[] buff = new byte[16];
 	FileInputStream fis2 = new FileInputStream(ficTestCase8);
@@ -625,10 +635,12 @@ public void testCase8() throws IOException
 	
 	File fic = new File("TestCase8Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -683,10 +695,12 @@ public void testCase9() throws IOException
 	
 	File fic = new File("TestCase9Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());
@@ -725,8 +739,7 @@ public void testCase10() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	//éteindre bouton 2C
-	//éteindre bouton 2M */
-	controleur.eteindreTousBoutons();
+	//éteindre bouton 2M
 	
 	byte[] buff = new byte[16];
 	FileInputStream fis2 = new FileInputStream(ficTestCase10);
@@ -737,10 +750,12 @@ public void testCase10() throws IOException
 	
 	File fic = new File("TestCase10Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
-	while(fis.read(buff) != -1) {
+	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
+	while(fis.read(buff) != -1 && b.readLine() != "END") {
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b.close();
 	fis2.close();
 	fis.close();
 	assertEquals(sb2.toString(), sb.toString());

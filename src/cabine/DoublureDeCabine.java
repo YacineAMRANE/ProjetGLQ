@@ -34,7 +34,7 @@ public class DoublureDeCabine implements ICabine{
 	 */
 	@Override
 	public void arreter() {
-		System.out.println("arreter");
+		System.out.println("arret");
 		
 	}
 
