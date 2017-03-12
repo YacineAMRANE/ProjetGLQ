@@ -1,0 +1,14 @@
+allumer bouton 1^
+arreter prochain etage
+monter
+arret
+eteindre bouton 1^
+allumer bouton 4-
+monter
+allumer bouton 7v
+arret urgence
+eteindre tous les boutons
+annulation
+allumer bouton 4-
+monter
+END

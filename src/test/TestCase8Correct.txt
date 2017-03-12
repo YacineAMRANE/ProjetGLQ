@@ -1,0 +1,12 @@
+allumer bouton 4^
+allumer bouton 4v
+descendre
+arreter prochain etage
+descendre
+arret
+eteindre bouton 4^
+eteindre bouton 4v
+allumer bouton 6-
+allumer bouton 2-
+descendre
+END

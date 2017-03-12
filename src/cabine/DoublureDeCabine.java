@@ -2,33 +2,39 @@ package cabine;
 
 public class DoublureDeCabine implements ICabine{
 
-	@Override
-	public void signalerChangementDEtage() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/** 
+	 * Permet de modifier le sens de deplacement de la cabine vers la MONTEE.
+	 */
 	@Override
 	public void monter() {
-		// TODO Auto-generated method stub
+		System.out.println("monter");
 		
 	}
 
+	/** 
+	 * Permet de modifier le sens de deplacement de la cabine vers la DESCENTE.
+	 */
 	@Override
 	public void descendre() {
-		// TODO Auto-generated method stub
+		System.out.println("descendre");
 		
 	}
 
+	/** 
+	 * Indique que le prochain niveau est la destination.
+	 */
 	@Override
 	public void arreterProchainNiveau() {
-		// TODO Auto-generated method stub
+		System.out.println("arreter prochain etage");
 		
 	}
 
+	/** 
+	 * Indique un arret.
+	 */
 	@Override
 	public void arreter() {
-		// TODO Auto-generated method stub
+		System.out.println("arret");
 		
 	}
 

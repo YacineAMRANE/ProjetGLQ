@@ -1,0 +1,20 @@
+allumer bouton 1^
+arreter prochain etage
+descendre
+arret
+eteindre bouton 1^
+allumer bouton 4-
+allumer bouton 3v
+monter
+monter
+arreter prochain etage
+monter
+arret
+eteindre bouton 4-
+arreter prochain etage
+descendre
+arret
+eteindre bouton 3v
+allumer bouton 0-
+descendre
+END

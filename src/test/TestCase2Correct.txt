@@ -1,0 +1,15 @@
+allumer bouton 4-
+monter
+allumer bouton 5^
+arreter prochain etage
+monter
+arret
+eteindre bouton 4-
+arreter prochain etage
+monter
+arret
+eteindre bouton 5^
+monter
+monter
+monter
+END
