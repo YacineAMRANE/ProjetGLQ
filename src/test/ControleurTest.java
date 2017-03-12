@@ -8,8 +8,7 @@ import java.io.*;
 
 import org.junit.*;
 
-import cabine.DoublureDeCabine;
-import cabine.ICabine;
+import cabine.*;
 import commande.IListeTrieeCirculaire;
 import commande.ListeTrieeCirculaireDeDemandes;
 import controleur.*;
