@@ -1,0 +1,2 @@
+monter
+allumer bouton 6^

@@ -1,0 +1,3 @@
+descendre
+arreter prochain etage
+allumer bouton 1^

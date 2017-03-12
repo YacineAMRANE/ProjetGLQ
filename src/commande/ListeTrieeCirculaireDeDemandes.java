@@ -330,4 +330,8 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		s+="]";
 		return s;
 	}
+
+	public ArrayList<Demande> getListeTriee() {
+		return this.listeTrieeCirculaireDeDemandes;
+	}
 }

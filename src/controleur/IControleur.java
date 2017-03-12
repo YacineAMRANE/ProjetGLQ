@@ -1,67 +1,80 @@
-package Controleur;
+package controleur;
 
+import cabine.ICabine;
+import commande.ListeTrieeCirculaireDeDemandes;
+import iug.IIUG;
 import outils.Demande;
+import outils.Sens;
 
 /**
- * 
+ * Interface IControleur.
  * @author yacine
  */
 public interface IControleur {
 	
 	/**
-	 * 
+	 * Faire une demande au controleur.
 	 */
 	void demander(Demande demande);
 	
 	/**
-	 * 
+	 * Arret d'urgence.
 	 */
 	void arretDUrgence();
 	
 	/**
-	 * 
+	 * Signaler un changement d'etage.
 	 */
 	void signalerChangementDEtage();
 	
 	/**
-	 * incrémente position de 1 si sens vaut MONTEE, décrémente de 1
-	 * si sens vaut DESCENTE
+	 * Incrémente position de 1 si sens vaut MONTEE, décrémente de 1 si sens vaut DESCENTE.
 	 */
 	void MAJPosition();
 
 	/**
-	 * met sens à INDEFINI si la cabine est arrêtée, MONTEE si la
-	 * cabine monte et DESCENTE si elle descend
-	 * stocker( demande) stocke la demande
-	 * @return 
+	 * Met sens à INDEFINI si la cabine est arrêtée, MONTEE si la cabine monte et DESCENTE si elle descend stocker( demande) stocke la demande.
 	 */
 	void MAJSens();
 
 	/**
-	 * stocke la demande
+	 * Stocke la demande.
 	 */
-	void stocker(Demande demande);
+	void stocker (Demande demande);
 
 	/**
-	 * éteint tous les boutons
+	 * Eteint tous les boutons.
 	 */
 	void eteindreTousBoutons();
 
 	/**
-	 * vide le stock des demandes
+	 * Vide le stock des demandes.
 	 */
 	void viderStock();
 
 	/**
-	 * renvoie la demande du stock qui vérifie certaines conditions par
-	 * rapport à la position et au sens ou au sensPrecedent
+	 * Renvoie la demande du stock qui vérifie certaines conditions par rapport à la position et au sens ou au sensPrecedent.
 	 */
-	void interrogerStock();
+	Demande interrogerStock();
 
 	/**
 	 * enlève la demande du stock
-	 * @param demande
+	 * @param demande Demande à enlever du stock.
 	 */
 	void enleverDuStock(Demande demande);
+
+	ListeTrieeCirculaireDeDemandes getStockDeDemandes();
+
+	void setIUG(IIUG iug);
+
+	void setCabine(ICabine cabine);
+
+	Sens getSens();
+
+	int getPosition();
+
+	Demande getDemandeCourante();
+
+	void setPosition(int i);
 
 }
