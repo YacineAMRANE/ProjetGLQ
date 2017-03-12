@@ -1,4 +1,4 @@
-package controleur;
+package Controleur;
 
 import outils.Demande;
 
@@ -7,6 +7,18 @@ public class Controleur implements IControleur {
 	@Override
 	public void MAJPosition() {
 		// TODO Auto-generated method stub
+		iug.setPosition(this.position);
+		swith(this.sens){
+			case MONTEE:
+				cabine.monter();
+				break;
+			case DESCENTE:
+				cabine.descendre();
+				break;
+			case INDEFINI:
+				cabine.arreter();
+				break;
+		}
 
 	}
 

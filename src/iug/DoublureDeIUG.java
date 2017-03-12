@@ -31,7 +31,7 @@ public class DoublureDeIUG implements IIUG {
 	 */
 	@Override
 	public void changerPosition(int position){
-		System.out.println("franchissement de palier:  cabine en "+ position); 
+		System.out.println("franchissement de palier: cabine en "+ position); 
 	}
 
 	/** 
