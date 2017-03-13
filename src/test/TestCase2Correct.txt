@@ -3,11 +3,9 @@ monter
 allumer bouton 5^
 arreter prochain etage
 monter
-arret
 eteindre bouton 4-
 arreter prochain etage
 monter
-arret
 eteindre bouton 5^
 monter
 monter

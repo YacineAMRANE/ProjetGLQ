@@ -47,6 +47,16 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	public boolean estVide() {
 		return listeTrieeCirculaireDeDemandes.isEmpty();
 	}
+	
+	/**
+	 * 
+	 * @param <E>
+	 * @return True si la liste est vide.
+	 */
+	@Override
+	public Demande get(int i) {
+		return listeTrieeCirculaireDeDemandes.get(i);
+	}
 
 	/**
 	 * 
@@ -80,7 +90,7 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 		{
 			throw new IllegalArgumentException();
 		}
-		if(((Demande) e).estIndefini())
+		if(((Demande) e).estIndefini() && ((Demande) e).etage() != 0)
 		{
 			throw new IllegalArgumentException();
 		}

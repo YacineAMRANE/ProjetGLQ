@@ -1,3 +1,7 @@
 descendre
-arreter prochain etage
 allumer bouton 1^
+arreter prochain etage
+allumer bouton 4^
+allumer bouton 3v
+allumer bouton 0-
+END

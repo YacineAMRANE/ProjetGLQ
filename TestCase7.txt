@@ -1,1 +1,8 @@
 descendre
+allumer bouton 1v
+allumer bouton 4v
+arreter prochain etage
+allumer bouton 2v
+descendre
+arreter prochain etage
+END

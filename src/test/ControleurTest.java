@@ -44,7 +44,6 @@ public class ControleurTest {
 		assertTrue(controleur.getStockDeDemandes().estVide());
 		assertTrue(controleur.getSens().equals(Sens.INDEFINI));
 		assertTrue(controleur.getPosition() == 0);
-		assertTrue(controleur.getDemandeCourante() == null);
 	}
 	
 	/**
@@ -72,28 +71,39 @@ public class ControleurTest {
 		controleur.signalerChangementDEtage();
 		// arrêt urgence 
 		controleur.arretDUrgence();
-		// eteindre tous les boutons
-		controleur.eteindreTousBoutons();
 		// reprise
 		// appel 4C
 		controleur.demander(new Demande(4, Sens.INDEFINI));
 		// cabine en 3
 		controleur.signalerChangementDEtage();
+		System.out.println("END");
 		
-		byte[] buff = new byte[16];
+		byte[] buff = new byte[255];
 		FileInputStream fis2 = new FileInputStream(ficTestCase1);
+		BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 		while(fis2.read(buff) != -1) {
+			if(b2.readLine() != "END")
+			{
+				break;
+			}
 			String s = new String(buff);
 			sb.append(s);
+			sb.delete(0, sb.length());
 		}	
 		
-		File fic = new File("TestCase1Correct.txt");
+		File fic = new File("src/test/TestCase1Correct.txt");
 		FileInputStream fis = new FileInputStream(fic);
 		BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 		while(fis.read(buff) != -1 && b.readLine() != "END") {
+			if(b.readLine() != "END")
+			{
+				break;
+			}
 			String s = new String(buff);
 			sb2.append(s);
+			sb.delete(0, sb.length());
 		}
+		b2.close();
 		b.close();
 		fis2.close();
 		fis.close();
@@ -150,21 +160,32 @@ public void testCase2() throws IOException
 	//signal franchissement palier ------------(cabine en 8) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase2);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase2Correct.txt");
+	File fic = new File("src/test/TestCase2Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -227,21 +248,32 @@ public void testCase3() throws IOException
 	//signal de franchissement de palier ------(cabine en 2)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase3);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase3Correct.txt");
+	File fic = new File("src/test/TestCase3Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -295,22 +327,33 @@ public void testCase4() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	// eteindre bouton 8M
+	System.out.println("END");
 
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase4);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase4Correct.txt");
+	File fic = new File("src/test/TestCase4Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -384,22 +427,32 @@ public void testCase5() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	//éteindre bouton 0C
-
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase5);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase5Correct.txt");
+	File fic = new File("src/test/TestCase5Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -490,21 +543,32 @@ public void testCase6() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	//éteindre bouton 0C */
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase6);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase6Correct.txt");
+	File fic = new File("src/test/TestCase6Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -562,21 +626,32 @@ public void testCase7() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	//éteindre bouton 1C 
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase7);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase7Correct.txt");
+	File fic = new File("src/test/TestCase7Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -624,21 +699,32 @@ public void testCase8() throws IOException
 	//descendre */
 	//controleur.MAJSens();
 	controleur.signalerChangementDEtage();
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase8);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase8Correct.txt");
+	File fic = new File("src/test/TestCase8Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -684,21 +770,32 @@ public void testCase9() throws IOException
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	//éteindre bouton 3C
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase9);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase9Correct.txt");
+	File fic = new File("src/test/TestCase9Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();
@@ -739,21 +836,32 @@ public void testCase10() throws IOException
 	//controleur.MAJPosition();
 	//éteindre bouton 2C
 	//éteindre bouton 2M
+	System.out.println("END");
 	
-	byte[] buff = new byte[16];
+	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase10);
+	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
+		if(b2.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
 	
-	File fic = new File("TestCase10Correct.txt");
+	File fic = new File("src/test/TestCase10Correct.txt");
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-	while(fis.read(buff) != -1 && b.readLine() != "END") {
+	while(fis.read(buff) != -1) {
+		if(b.readLine() != "END")
+		{
+			break;
+		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
+	b2.close();
 	b.close();
 	fis2.close();
 	fis.close();

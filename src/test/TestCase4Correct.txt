@@ -5,11 +5,9 @@ monter
 monter
 arreter prochain etage
 monter
-arret
 eteindre bouton 6-
 monter
 arreter prochain etage
 monter
-arret
 eteindre bouton 8^
 END

@@ -6,18 +6,15 @@ allumer bouton 2v
 monter
 arreter prochain etage
 monter
-arret
 eteindre bouton 5-
 descendre
 descendre
 arreter prochain etage
 descendre
-arret
 eteindre bouton 2v
 allumer bouton 0-
 descendre
 arreter prochain etage
 descendre
-arret
 eteindre bouton 0-
 END

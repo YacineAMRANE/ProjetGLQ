@@ -5,6 +5,8 @@
  */
 package commande;
 
+import outils.Demande;
+
 /**
  * Une IListeCirculaire represente une liste circulaire triee. 
  * @author Lucile Torres-Gerardin
@@ -62,5 +64,7 @@ public interface IListeTrieeCirculaire<E> {
 	 * ou null si la liste est vide.
 	 * 
 	 */
-	E suivantDe( E courant);	
+	E suivantDe( E courant);
+
+	E get(int i);	
 }

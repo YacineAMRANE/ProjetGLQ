@@ -2,11 +2,9 @@ allumer bouton 3-
 allumer bouton 1^
 arreter prochain etage
 monter
-arret
 eteindre bouton 1^
 monter
 arreter prochain etage
 monter
-arret
 eteindre bouton 3-
 END

@@ -1,1 +1,5 @@
 monter
+allumer bouton 2^
+allumer bouton 2^
+arreter prochain etage
+END

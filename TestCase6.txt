@@ -1,2 +1,10 @@
 monter
 allumer bouton 6^
+arreter prochain etage
+allumer bouton 4^
+monter
+arreter prochain etage
+allumer bouton 2v
+arreter prochain etage
+allumer bouton 0-
+END

@@ -3,17 +3,14 @@ allumer bouton 4v
 descendre
 arreter prochain etage
 descendre
-arret
 eteindre bouton 4v
 allumer bouton 2v
 descendre
 arreter prochain etage
 descendre
-arret
 eteindre bouton 2v
 descendre
 arreter prochain etage
 descendre
-arret
 eteindre bouton 1-
 END

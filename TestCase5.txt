@@ -1,1 +1,8 @@
 monter
+allumer bouton 5^
+arreter prochain etage
+allumer bouton 2v
+allumer bouton 0-
+monter
+arreter prochain etage
+END

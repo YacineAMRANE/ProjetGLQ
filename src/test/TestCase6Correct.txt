@@ -4,7 +4,6 @@ monter
 allumer bouton 4^
 arreter prochain etage
 monter 
-arret
 eteindre bouton 6^
 allumer bouton 2-
 descendre
@@ -12,19 +11,16 @@ descendre
 descendre
 arreter prochain etage
 descendre
-arret
 eteindre bouton 2-
 monter
 arreter prochain etage
 monter
-arret
 eteindre bouton 4^
 allumer bouton 0-
 descendre
 descendre
 descendre
-arret prochain etage
+arreter prochain etage
 descendre
-arret 
 eteindre bouton 0-
 END

@@ -1,1 +1,11 @@
 monter
+allumer bouton 1^
+arreter prochain etage
+monter
+allumer bouton 4^
+allumer bouton 7v
+eteindre bouton 4^
+eteindre bouton 7v
+monter
+allumer bouton 4^
+END
