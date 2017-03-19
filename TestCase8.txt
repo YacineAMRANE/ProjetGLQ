@@ -1,7 +1,21 @@
-descendre
+cabine en 6
+appel 4^
 allumer bouton 4^
+descendre
+appel 4v
 allumer bouton 4v
+cabine en 5
 arreter prochain etage
-allumer bouton 6^
-allumer bouton 2v
+descendre
+cabine en 4
+eteindre bouton 4v
+eteindre bouton 4^
+appel 6-
+allumer bouton 6-
+monter
+appel 2-
+allumer bouton 2-
+cabine en 5
+arreter prochain etage
+monter
 END

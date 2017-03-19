@@ -1,8 +1,6 @@
-/test/
-/TestCase2Correct.txt
-/TestCase3Correct.txt
 /cabine/
-/Controleur/
-/iug/
-/controleur/
 /commande/
+/controleur/
+/iug/
+/outils/
+/test/

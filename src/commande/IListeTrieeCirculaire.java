@@ -5,6 +5,8 @@
  */
 package commande;
 
+import java.util.ArrayList;
+
 import outils.Demande;
 
 /**
@@ -67,4 +69,6 @@ public interface IListeTrieeCirculaire<E> {
 	E suivantDe( E courant);
 
 	E get(int i);	
+	
+	ArrayList<Demande> getListeTriee();
 }

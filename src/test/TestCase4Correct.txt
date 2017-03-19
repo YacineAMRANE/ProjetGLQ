@@ -1,13 +1,22 @@
+cabine en 2
+appel 6-
 allumer bouton 6-
 monter
+cabine en 3
+monter
+appel 8^
 allumer bouton 8^
+cabine en 4
 monter
-monter
+cabine en 5
 arreter prochain etage
 monter
+cabine en 6
 eteindre bouton 6-
 monter
+cabine en 7
 arreter prochain etage
 monter
+cabine en 8
 eteindre bouton 8^
 END

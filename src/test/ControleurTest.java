@@ -1,53 +1,54 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import cabine.*;
-import commande.IListeTrieeCirculaire;
-import commande.ListeTrieeCirculaireDeDemandes;
-import controleur.*;
-import iug.DoublureDeIUG;
 import outils.Demande;
 import outils.Sens;
+import cabine.ICabine;
 import iug.IIUG;
+import cabine.DoublureDeCabine;
+import iug.DoublureDeIUG;
+import controleur.Controleur;
+import commande.ListeTrieeCirculaireDeDemandes;
 
 public class ControleurTest {
-	private IControleur controleur;
-	private ICabine cabine;
-	private IIUG iug;
-	
+	ListeTrieeCirculaireDeDemandes demandes;
+	ICabine cabine;
+	IIUG iug;
+	Controleur controleur;
+
 	@Before
-	public void setUp() {
-		controleur = new Controleur(10);
-		cabine = new DoublureDeCabine();
-		iug = new DoublureDeIUG();
-		controleur.setIUG(iug);
-		controleur.setCabine(cabine);
+	public void setUp()  {
+		this.demandes = new ListeTrieeCirculaireDeDemandes(10);
+		this.cabine = new DoublureDeCabine();
+		this.iug  = new DoublureDeIUG();
+		this.controleur = new Controleur(demandes, 10);
+		this.controleur.setCabine(cabine);
+		this.controleur.setIUG(iug);
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		
+	public void tearDown() {
+		this.demandes = null;
+		this.cabine = null;
+		this.iug = null;
+		this.controleur = null;
+		System.out.flush();
 	}
 
 	/**
-	 * Methode de test de {@link controleur.Controleur#Controleur()}.
-	 */
-	@Test
-	public void testControleur() {
-		assertTrue(controleur.getStockDeDemandes().estVide());
-		assertTrue(controleur.getSens().equals(Sens.INDEFINI));
-		assertTrue(controleur.getPosition() == 0);
-	}
-	
-	/**
-	 * Les appels de l'ascenseur après un arrêt prolongé
+	 * Les appels de l'ascenseur apres un arret prolonge
 	 */
 	@Test 
 	public void testCase1() throws IOException
@@ -59,6 +60,7 @@ public class ControleurTest {
 		StringBuffer sb = new StringBuffer();
 		StringBuffer sb2 = new StringBuffer();
 		// cabine en 0
+		controleur.setPosition(0);
 		// appel 1M
 		controleur.demander(new Demande(1, Sens.MONTEE));
 		// cabine en 1
@@ -69,8 +71,8 @@ public class ControleurTest {
 		controleur.demander(new Demande(7, Sens.DESCENTE));
 		// cabine en 2
 		controleur.signalerChangementDEtage();
-		// arrêt urgence 
-		controleur.arretDUrgence();
+		// arret urgence 
+		controleur.arretUrgence();
 		// reprise
 		// appel 4C
 		controleur.demander(new Demande(4, Sens.INDEFINI));
@@ -82,26 +84,16 @@ public class ControleurTest {
 		FileInputStream fis2 = new FileInputStream(ficTestCase1);
 		BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 		while(fis2.read(buff) != -1) {
-			if(b2.readLine() != "END")
-			{
-				break;
-			}
 			String s = new String(buff);
 			sb.append(s);
-			sb.delete(0, sb.length());
 		}	
 		
 		File fic = new File("src/test/TestCase1Correct.txt");
 		FileInputStream fis = new FileInputStream(fic);
 		BufferedReader b = new BufferedReader(new InputStreamReader(fis));
-		while(fis.read(buff) != -1 && b.readLine() != "END") {
-			if(b.readLine() != "END")
-			{
-				break;
-			}
+		while(fis.read(buff) != -1) {
 			String s = new String(buff);
 			sb2.append(s);
-			sb.delete(0, sb.length());
 		}
 		b2.close();
 		b.close();
@@ -111,7 +103,7 @@ public class ControleurTest {
 	}
 
 /**
- * Les appels de l'ascenseur dans le même sens que celui de la cabine en cours de déplacement
+ * Les appels de l'ascenseur dans le meme sens que celui de la cabine en cours de deplacement
  */
 @Test 
 public void testCase2() throws IOException
@@ -126,38 +118,28 @@ public void testCase2() throws IOException
 	//Manipulation de la cabine
 	//---------------------------------------(cabine en 2)
 	controleur.setPosition(2);
-	// Un utilisateur interne appuie sur le bouton “étage 4”
-	//appel 4C ------------------------------(utilisateur 1)
-	controleur.demander(new Demande(4, Sens.INDEFINI));
-	//allumer bouton 4C
+	// Un utilisateur interne appuie sur le bouton etage 4
+	//appel 5M ------------------------------(utilisateur 1)
+	controleur.demander(new Demande(7, Sens.MONTEE));
+	//allumer bouton 5M
 	//monter
 	//controleur.MAJSens();
 	//signal de franchissement de palier ----(cabine en 3)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//A ce moment là un utilisateur externe se situant au 5ème demande l’ascenseur
-	//appel 5M ------------------------------(utilisateur 2)
-	//allumer bouton 5M
+	//A ce moment le un utilisateur externe se situant au 4eme demande l'ascenseur
+	//appel 4M ------------------------------(utilisateur 2)
+	//allumer bouton 4M
 	controleur.demander(new Demande(5, Sens.MONTEE));
-	//L’ascenseur se situe en 4, on éteint le bouton 4C
+	//L'ascenseur se situe en 4, on eteint le bouton 4M
 	//signal franchissement palier -----------(cabine en 4)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 4C
-	//L’ascenseur continue de monter jusqu’à l’étage 5, demandé par l’utilisateur 2
+	//eteindre bouton 4M
+	//L'utilisateur 2 monte dans l'ascenseur
+	//L'ascenseur continue de monter jusqu'a l'etage 5, demande par l'utilisateur 1
 	//monter
 	//signal franchissement palier -----------(cabine en 5)
-	controleur.signalerChangementDEtage();
-	//controleur.MAJPosition();
-	//L’utilisateur 2 monte dans l’ascenseur
-	//monter
-	//signal franchissement palier ------------(cabine en 6)
-	controleur.signalerChangementDEtage();
-	//controleur.MAJPosition();
-	//signal franchissement palier ------------(cabine en 7)
-	controleur.signalerChangementDEtage();
-	//controleur.MAJPosition();
-	//signal franchissement palier ------------(cabine en 8) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
 	System.out.println("END");
@@ -166,10 +148,6 @@ public void testCase2() throws IOException
 	FileInputStream fis2 = new FileInputStream(ficTestCase2);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -178,10 +156,6 @@ public void testCase2() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -192,7 +166,7 @@ public void testCase2() throws IOException
 	assertEquals(sb2.toString(), sb.toString());
 	}
 /**
- * Les appels de l'ascenseur dans le sens inverse à celui de la cabine en cours de déplacement
+ * Les appels de l'ascenseur dans le sens inverse a celui de la cabine en cours de deplacement
  */
 @Test 
 public void testCase3() throws IOException
@@ -210,12 +184,12 @@ public void testCase3() throws IOException
 	//appel 1M -------------------------------(utilisateur 1) 
 	controleur.demander(new Demande(1, Sens.MONTEE));
 	//allumer bouton 1M 
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//descendre
 	//signal de franchissement de palier ------(cabine en 1) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 1M 
+	//eteindre bouton 1M 
 	//appel 4C --------------------------------(utilisateur 1)
 	controleur.demander(new Demande(4, Sens.INDEFINI));
 	//allumer bouton 4C 
@@ -230,34 +204,24 @@ public void testCase3() throws IOException
 	//signal de franchissement de palier ------(cabine en 3) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//signal de franchissement de palier ------(cabine en 4)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 4C
+	//eteindre bouton 4C
 	//descendre
 	//controleur.MAJSens();
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//signal de franchissement de palier ------(cabine en 3)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 3D
-	//appel 0C --------------------------------(utilisateur 2)
-	controleur.demander(new Demande(0, Sens.INDEFINI));
-	//descendre
-	//signal de franchissement de palier ------(cabine en 2)
-	controleur.signalerChangementDEtage();
-	//controleur.MAJPosition();
+	//eteindre bouton 3D
 	System.out.println("END");
 	
 	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase3);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -266,10 +230,6 @@ public void testCase3() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -312,17 +272,17 @@ public void testCase4() throws IOException
 	//signal de franchissement de palier ------(cabine en 5)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier ------(cabine en 6)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 6C
+	//eteindre bouton 6C
 	//monter
 	//controleur.MAJSens();
 	//signal de franchissement de palier -------(cabine en 7)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier -------(cabine en 8)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
@@ -334,10 +294,6 @@ public void testCase4() throws IOException
 	FileInputStream fis2 = new FileInputStream(ficTestCase4);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -346,10 +302,6 @@ public void testCase4() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -396,11 +348,11 @@ public void testCase5() throws IOException
 	//signal de franchissement de palier -----(cabine en 4)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier -----(cabine en 5)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 5C
+	//eteindre bouton 5C
 	//descendre
 	//controleur.MAJSens();
 	//signal de franchissement de palier -----(cabine en 4)
@@ -409,11 +361,11 @@ public void testCase5() throws IOException
 	//signal de franchissement de palier -----(cabine en 3)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier -----(cabine en 2)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 2D
+	//eteindre bouton 2D
 	//appel 0C -------------------------------(utilisateur 2)
 	controleur.demander(new Demande(0, Sens.INDEFINI));
 	//allumer bouton 0C
@@ -422,21 +374,17 @@ public void testCase5() throws IOException
 	//signal de franchissement de palier -----(cabine en 1)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier ------(cabine en 0)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 0C
+	//eteindre bouton 0C
 	System.out.println("END");
 	
 	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase5);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -445,10 +393,6 @@ public void testCase5() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -486,13 +430,13 @@ public void testCase6() throws IOException
 	//signal de franchissement de palier -----(cabine en 5)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//appel 4M
-	controleur.demander(new Demande(4, Sens.MONTEE));
-	//allumer bouton 4M -----------------------(utilisateur 2)
+	controleur.demander(new Demande(3, Sens.MONTEE));
+	//allumer bouton 3M -----------------------(utilisateur 2)
 	//signal de franchissement ----------------(cabine en 6)
 	controleur.signalerChangementDEtage();
-	//éteindre bouton 6M
+	//eteindre bouton 6M
 	//appel 2C --------------------------------(utilisateur 1)
 	controleur.demander(new Demande(2, Sens.INDEFINI));
 	//allumer bouton 2C
@@ -508,22 +452,22 @@ public void testCase6() throws IOException
 	//signal de franchissement de palier -------(cabine en 3)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier -------(cabine en 2)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 2C
-	//Deuxième changement de sens
+	//eteindre bouton 2C
+	//Deuxieme changement de sens
 	//monter
 	//controleur.MAJSens();
 	//signal de franchissement de palier -------(cabine en 3)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier --------(cabine en 4)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 4M
+	//eteindre bouton 4M
 	//appel 0C ----------------------------------(utilisateur 2)
 	controleur.demander(new Demande(0, Sens.INDEFINI));
 	//allumer bouton 0C
@@ -538,21 +482,17 @@ public void testCase6() throws IOException
 	//signal de franchissement de palier --------(cabine en 1)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêt au prochain étage
+	//arret au prochain etage
 	//signal de franchissement de palier ---------(cabine en 0)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 0C */
+	//eteindre bouton 0C */
 	System.out.println("END");
 	
 	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase6);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -561,10 +501,6 @@ public void testCase6() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -575,7 +511,7 @@ public void testCase6() throws IOException
 	assertEquals(sb2.toString(), sb.toString());
 	}
 /**
- * Appel intermédiaire et arrêt intermédiaire
+ * Appel intermediaire et arret intermediaire
  */
 @Test 
 public void testCase7() throws IOException
@@ -602,11 +538,11 @@ public void testCase7() throws IOException
 	//signal de franchissement de palier ----(cabine en 5) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//signal de franchissement de palier ----(cabine en 4) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 4D
+	//eteindre bouton 4D
 	//appel 2C ------------------------------(utilisateur 2) 
 	controleur.demander(new Demande(2, Sens.INDEFINI));
 	//allumer bouton 2C
@@ -615,27 +551,23 @@ public void testCase7() throws IOException
 	//signal de franchissement de palier -----(cabine en 3) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//signal de franchissement de palier -----(cabine en 2)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 2C
+	//eteindre bouton 2C
 	//descendre
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//signal de franchissement de palier ------(cabine en 1) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 1C 
+	//eteindre bouton 1C 
 	System.out.println("END");
 	
 	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase7);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -644,10 +576,6 @@ public void testCase7() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -658,7 +586,7 @@ public void testCase7() throws IOException
 	assertEquals(sb2.toString(), sb.toString());
 	}
 /**
- * Deux appels à partir du même palier
+ * Deux appels a partir du meme palier
  */
 @Test 
 public void testCase8() throws IOException
@@ -684,19 +612,19 @@ public void testCase8() throws IOException
 	//signal de franchissement de palier ------(cabine en 5) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêter prochain étage 
+	//arreter prochain etage 
 	//signal de franchissement de palier ------(cabine en 4) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 4M
-	//éteindre bouton 4D
+	//eteindre bouton 4M
+	//eteindre bouton 4D
 	//appel 6C --------------------------------(utilisateur 1)
 	controleur.demander(new Demande(6, Sens.INDEFINI));
 	//allumer bouton 6C 
 	//appel 2C --------------------------------(utilisateur 2)
 	controleur.demander(new Demande(2, Sens.INDEFINI));
 	//allumer bouton 2C
-	//descendre */
+	//monter */
 	//controleur.MAJSens();
 	controleur.signalerChangementDEtage();
 	System.out.println("END");
@@ -705,10 +633,6 @@ public void testCase8() throws IOException
 	FileInputStream fis2 = new FileInputStream(ficTestCase8);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -717,10 +641,6 @@ public void testCase8() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -731,7 +651,7 @@ public void testCase8() throws IOException
 	assertEquals(sb2.toString(), sb.toString());
 	}
 /**
- * Deux appels pour le même étage
+ * Deux appels pour le meme etage
  */
 @Test 
 public void testCase9() throws IOException
@@ -748,38 +668,34 @@ public void testCase9() throws IOException
 	// --------------------------------------(cabine en 0) 
 	controleur.setPosition(0);
 	//appel 3C ------------------------------(utilisateur 1) 
-	controleur.demander(new Demande(3, Sens.INDEFINI));
+	controleur.demander(new Demande(4, Sens.INDEFINI));
 	//allumer bouton 3C
 	//controleur.MAJSens();
 	//appel 1M ------------------------------(utilisateur 2)
-	controleur.demander(new Demande(1, Sens.MONTEE));
+	controleur.demander(new Demande(2, Sens.MONTEE));
 	//allumer bouton 1M
 	//monter
-	//arrêter prochain étage
+	//arreter prochain etage
 	//signal de franchissement de palier -----(cabine en 1) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 1M
-	// l’utilisateur 2 monte également en 3
+	//eteindre bouton 1M
+	// leutilisateur 2 monte egalement en 3
 	//monter
 	//signal de franchissement de palier ------(cabine en 2) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêter prochain étage
+	//arreter prochain etage
 	//signal de franchissement de palier ------(cabine en 3)
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 3C
+	//eteindre bouton 3C
 	System.out.println("END");
 	
 	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase9);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -788,10 +704,6 @@ public void testCase9() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}
@@ -802,7 +714,7 @@ public void testCase9() throws IOException
 	assertEquals(sb2.toString(), sb.toString());
 	}
 /**
- * Un appel pour un étage en cours de service
+ * Un appel pour un etage en cours de service
  */
 @Test 
 public void testCase10() throws IOException
@@ -830,22 +742,18 @@ public void testCase10() throws IOException
 	//signal de franchissement de palier ---(cabine en 1) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//arrêter prochain étage
+	//arreter prochain etage
 	//signal de franchissement de palier ----(cabine en 2) 
 	controleur.signalerChangementDEtage();
 	//controleur.MAJPosition();
-	//éteindre bouton 2C
-	//éteindre bouton 2M
+	//eteindre bouton 2C
+	//eteindre bouton 2M
 	System.out.println("END");
 	
 	byte[] buff = new byte[255];
 	FileInputStream fis2 = new FileInputStream(ficTestCase10);
 	BufferedReader b2 = new BufferedReader(new InputStreamReader(fis2));
 	while(fis2.read(buff) != -1) {
-		if(b2.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb.append(s);
 	}	
@@ -854,10 +762,6 @@ public void testCase10() throws IOException
 	FileInputStream fis = new FileInputStream(fic);
 	BufferedReader b = new BufferedReader(new InputStreamReader(fis));
 	while(fis.read(buff) != -1) {
-		if(b.readLine() != "END")
-		{
-			break;
-		}
 		String s = new String(buff);
 		sb2.append(s);
 	}

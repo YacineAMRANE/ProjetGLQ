@@ -1,12 +1,24 @@
+cabine en 0
+appel 1^
 allumer bouton 1^
 arreter prochain etage
 monter
+cabine en 1
 eteindre bouton 1^
+appel 4-
 allumer bouton 4-
+monter
+appel 7v
 allumer bouton 7v
+cabine en 2
 monter
-eteindre bouton 4^
+arret d'urgence
+eteindre bouton 4-
 eteindre bouton 7v
+appel 4-
+allumer bouton 4-
 monter
-allumer bouton 4^
+cabine en 3
+arreter prochain etage
+monter
 END

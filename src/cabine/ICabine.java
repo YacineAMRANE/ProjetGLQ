@@ -1,19 +1,21 @@
 package cabine;
 
+import controleur.IControleur;
+
 /**
  * Classes et interfaces de la partie gerant la cabine 
- * @author alexis brunet
+ * @author yacine AMRANE, alexis BRUNET, franck BRUN, yann DENICOLO
  *
  */
 public interface ICabine 
 {
 	/** 
-	 * Permet de modifier le sens de deplacement de la cabine vers la MONTEE.
+	 * Indique un changement de position de la cabine vers une montee.
 	 */
 	void monter();
 	
 	/** 
-	 * Permet de modifier le sens de deplacement de la cabine vers la DESCENTE.
+	 * Indique un changement de position de la cabine vers une descente.
 	 */
 	void descendre();
 	
@@ -26,4 +28,10 @@ public interface ICabine
 	 * Indique un arret.
 	 */
 	void arreter();
+	
+	/**
+	 * Permet de donner un controleur a la cabine
+	 * @param controleur controleur associe.
+	 */
+	public void assignerControleur(IControleur controleur);
 }

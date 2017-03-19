@@ -1,9 +1,12 @@
+cabine en 0
+appel 2-
 allumer bouton 2-
-allumer bouton 2^
 monter
+appel 2^
+allumer bouton 2-
+cabine en 1
 arreter prochain etage
 monter
-arret
+cabine en 2
 eteindre bouton 2-
-eteindre bouton 2^
 END

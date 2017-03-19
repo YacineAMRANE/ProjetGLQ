@@ -1,5 +1,16 @@
+cabine en 0
+appel 4-
+allumer bouton 4-
 monter
-allumer bouton 3^
-allumer bouton 1^
+appel 2^
+allumer bouton 2^
+cabine en 1
 arreter prochain etage
+monter
+cabine en 2
+eteindre bouton 2^
+monter
+cabine en 3
+arreter prochain etage
+monter
 END

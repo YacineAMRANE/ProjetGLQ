@@ -1,10 +1,11 @@
 package iug;
 
+import controleur.IControleur;
 import outils.Demande;
 
 /**
  * Classes et interfaces de la partie gerant l iug 
- * @author yann denicolo
+ * @author yacine AMRANE, alexis BRUNET, franck BRUN, yann DENICOLO
  *
  */
 public interface IIUG {
@@ -27,8 +28,19 @@ public interface IIUG {
 	void changerPosition(int position);
 	
 	/** 
-	 * ajoute un message
+	 * Ajoute un message.
 	 * @param message message a ajouter.
 	 */
 	void ajouterMessage(String message);
+	
+	/** 
+	 * Permet d'eteindre tous les boutons des demandes.
+	 */
+	void eteindreTousBoutons();
+
+	/**
+	 * Permet de donner un controleur a l'IUG
+	 * @param controleur controleur associe.
+	 */
+	public void assignerControleur(IControleur controleur);
 }
