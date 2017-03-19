@@ -22,6 +22,12 @@ import iug.DoublureDeIUG;
 import controleur.Controleur;
 import commande.ListeTrieeCirculaireDeDemandes;
 
+/**
+ * Classe de test de la classe {@link controleur.Controleur}.
+ * 
+ * @author yacine AMRANE, alexis BRUNET, franck BRUN, yann DENICOLO
+ *
+ */
 public class ControleurTest {
 	ListeTrieeCirculaireDeDemandes demandes;
 	ICabine cabine;
