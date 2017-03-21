@@ -1,15 +1,15 @@
 package iug;
 
 import outils.Demande;
-import iug.IIUG;
-import controleur.IControleur;
+import operative.IIUG;
+import commande.IControleur;
 
 /**
  * Classe simulant le comportement d'un iug 
  * @author yacine AMRANE, alexis BRUNET, franck BRUN, yann DENICOLO
  *
  */
-public class DoublureDeIUG implements IIUG {
+public class DoublureDeIUG implements operative.IIUG {
 	/**
 	 * L'iug est lie a un controleur.
 	 */

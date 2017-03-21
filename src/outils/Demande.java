@@ -38,7 +38,7 @@ public class Demande  {
 	 * Retourne l'etage de la demande.
 	 * @return L'etage de destination.
 	 */
-	public int etage() {
+	public Integer etage() {
 		return this.etage;
 	}
 
@@ -67,8 +67,8 @@ public class Demande  {
 	}
 
 	/**
-	 * Passage à l'etage suivant.
-	 * @throws ExceptionCabineArretee Exception générée dans le cas d'une demande indefini.
+	 * Passage ï¿½ l'etage suivant.
+	 * @throws ExceptionCabineArretee Exception gï¿½nï¿½rï¿½e dans le cas d'une demande indefini.
 	 */
 	public void passeEtageSuivant() throws ExceptionCabineArretee {
 		if (this.sens == Sens.DESCENTE) etage--;
@@ -99,11 +99,11 @@ public class Demande  {
 	public String toString(){
 		return this.etage+this.sens.toString();
 	}
-	
+
 	/**
 	 * Redefinition de equals.
-	 * @param object Objet reçu.
-	 * @return True si l'objet reçu est une demande.
+	 * @param object Objet reï¿½u.
+	 * @return True si l'objet reï¿½u est une demande.
 	 */
 	@Override
 	public boolean equals(Object object){
@@ -113,5 +113,7 @@ public class Demande  {
 		}
 		else return false;
 	}
+	
+	
 
 }

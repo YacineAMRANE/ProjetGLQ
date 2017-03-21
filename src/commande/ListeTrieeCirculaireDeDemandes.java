@@ -53,7 +53,6 @@ public class ListeTrieeCirculaireDeDemandes implements IListeTrieeCirculaire{
 	 * @param <E>
 	 * @return True si la liste est vide.
 	 */
-	@Override
 	public Demande get(int i) {
 		return listeTrieeCirculaireDeDemandes.get(i);
 	}

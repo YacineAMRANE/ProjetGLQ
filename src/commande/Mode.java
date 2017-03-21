@@ -1,4 +1,4 @@
-package controleur;
+package commande;
 
 public enum Mode {
 

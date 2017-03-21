@@ -15,15 +15,15 @@ import org.junit.Test;
 
 import outils.Demande;
 import outils.Sens;
-import cabine.ICabine;
-import iug.IIUG;
+import operative.ICabine;
+import operative.IIUG;
 import cabine.DoublureDeCabine;
 import iug.DoublureDeIUG;
-import controleur.Controleur;
+import commande.Controleur;
 import commande.ListeTrieeCirculaireDeDemandes;
 
 /**
- * Classe de test de la classe {@link controleur.Controleur}.
+ * Classe de test de la classe {@link commande.Controleur}.
  * 
  * @author yacine AMRANE, alexis BRUNET, franck BRUN, yann DENICOLO
  *

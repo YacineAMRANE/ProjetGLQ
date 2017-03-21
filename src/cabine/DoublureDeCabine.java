@@ -1,6 +1,7 @@
 package cabine;
 
-import controleur.IControleur;
+import commande.IControleur;
+import operative.ICabine;
 
 /**
  * Cette classe temporaire simule le comportement d'une cabine
@@ -14,7 +15,7 @@ public class DoublureDeCabine implements ICabine{
 	/**
 	 * La cabine est lie a un controleur.
 	 */
-	private IControleur controleur ; 
+	private commande.IControleur controleur ; 
 
 	/** 
 	 * Indique que le prochain niveau est la destination.
